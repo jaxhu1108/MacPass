@@ -64,6 +64,8 @@ jobs:
       - name: Package Release
         run: |
           cd ./build/Build/Products/Release
+          codesign --force --deep --sign - MacPass.app
+          codesign --verify --deep --strict --verbose=2 MacPass.app
           zip -9ry MacPass-continuous.zip MacPass.app
 
       - name: Create SHA256 Hash
