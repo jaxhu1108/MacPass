@@ -37,6 +37,8 @@ jobs:
           sed -i '' 's/@import Darwin\.Availability;/#import <Availability.h>/' Carthage/Checkouts/TransformerKit/Sources/NSValueTransformer+TransformerKit.m
           sed -i '' 's/@import Darwin\.C\.time;/#include <time.h>/' Carthage/Checkouts/TransformerKit/Sources/TTTDateTransformers.m
           sed -i '' 's/@import Darwin\.C\.xlocale;/#include <xlocale.h>/' Carthage/Checkouts/TransformerKit/Sources/TTTDateTransformers.m
+          sed -i '' '/#import <TransformerKit\/TTTDataTransformers.h>/d' Carthage/Checkouts/TransformerKit/Sources/TransformerKit.h
+          sed -i '' '/#import <TransformerKit\/TTTCryptographyTransformers.h>/d' Carthage/Checkouts/TransformerKit/Sources/TransformerKit.h
           set +e
           carthage build --platform macOS
           status=$?
