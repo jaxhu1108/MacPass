@@ -50,7 +50,7 @@ jobs:
 
       - name: Build
         run: |
-          set -o pipefail
+          set +e
           xcodebuild build \
             -configuration Release \
             -project MacPass.xcodeproj \
@@ -59,7 +59,13 @@ jobs:
             CODE_SIGNING_REQUIRED=NO \
             CODE_SIGN_ENTITLEMENTS="" \
             NO_SPARKLE=NO_SPARKLE \
-            -derivedDataPath ./build | xcpretty -c
+            -derivedDataPath ./build > xcodebuild.log 2>&1
+          status=$?
+          xcpretty -c < xcodebuild.log
+          if [ $status -ne 0 ]; then
+            cat xcodebuild.log
+          fi
+          exit $status
 
       - name: Package
         run: |
