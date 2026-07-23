@@ -27,7 +27,14 @@ jobs:
       - name: Bootstrap Carthage
         env:
           GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: carthage bootstrap --platform macOS
+        run: |
+          set +e
+          carthage bootstrap --platform macOS
+          status=$?
+          if [ $status -ne 0 ]; then
+            find "${TMPDIR:-/tmp}" -name 'carthage-xcodebuild*.log' -type f -print -exec tail -n 300 {} \;
+          fi
+          exit $status
 
       - name: Install xcpretty
         run: gem install xcpretty --no-document --quiet
