@@ -12,7 +12,7 @@ on:
 
 jobs:
   nightly:
-    runs-on: macos-15
+    runs-on: macos-15-intel
 
     steps:
       - uses: actions/checkout@v6
