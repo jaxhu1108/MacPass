@@ -35,6 +35,8 @@ jobs:
           rm -f Carthage/Checkouts/KissXML/KissXML.xcodeproj/xcshareddata/xcschemes/KissXML\ \(iOS\).xcscheme
           sed -i '' 's/@import Darwin\.Availability;/#import <Availability.h>/' Carthage/Checkouts/TransformerKit/Sources/NSValueTransformerName.h
           sed -i '' 's/@import Darwin\.Availability;/#import <Availability.h>/' Carthage/Checkouts/TransformerKit/Sources/NSValueTransformer+TransformerKit.m
+          sed -i '' 's/@import Darwin\.C\.time;/#include <time.h>/' Carthage/Checkouts/TransformerKit/Sources/TTTDateTransformers.m
+          sed -i '' 's/@import Darwin\.C\.xlocale;/#include <xlocale.h>/' Carthage/Checkouts/TransformerKit/Sources/TTTDateTransformers.m
           set +e
           carthage build --platform macOS
           status=$?
