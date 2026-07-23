@@ -22,7 +22,13 @@ jobs:
       - name: Bootstrap Carthage
         env:
           GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: carthage bootstrap --platform macOS
+        run: |
+          carthage bootstrap --platform macOS --no-build
+          rm -f Carthage/Checkouts/KeePassKit/KeePassKit.xcodeproj/xcshareddata/xcschemes/KeePassKit\ iOS.xcscheme
+          rm -f Carthage/Checkouts/KeePassKit/KeePassKit.xcodeproj/xcshareddata/xcschemes/KeePassKit\ tvOS.xcscheme
+          rm -f Carthage/Checkouts/KeePassKit/KeePassKit.xcodeproj/xcshareddata/xcschemes/KeePassKit\ watchOS.xcscheme
+          rm -f Carthage/Checkouts/KissXML/KissXML.xcodeproj/xcshareddata/xcschemes/KissXML\ \(iOS\).xcscheme
+          carthage build --platform macOS
 
       - name: Install xcpretty
         run: gem install xcpretty --no-document --quiet

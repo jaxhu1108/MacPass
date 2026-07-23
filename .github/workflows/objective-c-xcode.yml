@@ -28,8 +28,13 @@ jobs:
         env:
           GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          carthage bootstrap --platform macOS --no-build
+          rm -f Carthage/Checkouts/KeePassKit/KeePassKit.xcodeproj/xcshareddata/xcschemes/KeePassKit\ iOS.xcscheme
+          rm -f Carthage/Checkouts/KeePassKit/KeePassKit.xcodeproj/xcshareddata/xcschemes/KeePassKit\ tvOS.xcscheme
+          rm -f Carthage/Checkouts/KeePassKit/KeePassKit.xcodeproj/xcshareddata/xcschemes/KeePassKit\ watchOS.xcscheme
+          rm -f Carthage/Checkouts/KissXML/KissXML.xcodeproj/xcshareddata/xcschemes/KissXML\ \(iOS\).xcscheme
           set +e
-          carthage bootstrap --platform macOS
+          carthage build --platform macOS
           status=$?
           if [ $status -ne 0 ]; then
             find "${TMPDIR:-/tmp}" -name 'carthage-xcodebuild*.log' -type f -print -exec tail -n 300 {} \;
